@@ -6,21 +6,21 @@ export async function middleware(req: NextRequest) {
 	const supabase = createMiddlewareClient<Database>({ req, res });
 
 	const {
-		data: { user },
-	} = await supabase.auth.getUser();
+		data: { session },
+	} = await supabase.auth.getSession();
 
 	// if user is signed in and the current path is / redirect the user to /account
-	if (user && req.nextUrl.pathname === '/') {
-		return NextResponse.redirect(new URL(`/${user.user_metadata.organizations[0]}`, req.url));
+	if (session?.user && req.nextUrl.pathname === '/') {
+		return NextResponse.redirect(new URL(`/${session.user.user_metadata.organizations[0]}`, req.url));
 	}
 
 	// if user is not signed in and the current path is / redirect the user to /login
-	if (user && req.nextUrl.pathname === '/') {
+	if (session?.user && req.nextUrl.pathname === '/') {
 		return NextResponse.redirect(new URL('/login', req.url));
 	}
 
 	// if user is not signed in and the current path is not / redirect the user to /
-	if (!user && req.nextUrl.pathname !== '/') {
+	if (!session?.user && req.nextUrl.pathname !== '/') {
 		return NextResponse.redirect(new URL('/', req.url));
 	}
 
