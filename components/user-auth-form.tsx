@@ -7,16 +7,22 @@ import { Input } from '@/components/ui/input';
 import { ReloadIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 import { handleSignIn } from '@/app/actions';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { redirect } from 'next/navigation';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	const { pending } = useFormStatus();
 
-	function onSubmit(formData: FormData) {
+	async function onSubmit(formData: FormData) {
 		const email = formData.get('email');
 		const password = formData.get('password');
-		handleSignIn({ email, password });
+		if (!email || !password) return;
+		const user = await handleSignIn({ email, password });
+
+		if (!user || !user.user_metadata.organizations) return;
+
+		redirect(`/${user.user_metadata.organizations[0]}`);
 	}
 
 	return (
