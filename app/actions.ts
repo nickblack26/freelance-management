@@ -8,18 +8,18 @@ import { ProjectFormValues } from '@/components/forms/newProjectForm';
 
 const supabase = createServerActionClient<Database>({ cookies });
 
-export const handleSignIn = async ({ email, password }: { email: string; password: string }) => {
+export const handleSignIn = async ({ email, password }: { email: any; password: any }) => {
 	'use server';
 	const { data, error } = await supabase.auth.signInWithPassword({
 		email,
 		password,
 	});
 
-	if (!error) {
-		redirect(`/${data.user.user_metadata.organizations[0]}/`);
+	if (!data && error) {
+		throw Error(`${error}`);
 	}
 
-	// revalidatePath('/');
+	return data.user;
 };
 
 export const handleSignOut = async () => {
