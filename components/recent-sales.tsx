@@ -1,12 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-export type Transaction = {
-	id: string;
-	amount: number;
-	date: Date;
-	purpose: string;
-};
-
 interface RecentTransactionsProps {
 	className?: React.HTMLAttributes<HTMLElement>;
 	transactions: Transaction[] | null;
@@ -22,10 +15,10 @@ export function RecentSales({ className, transactions }: RecentTransactionsProps
 						<AvatarFallback>OM</AvatarFallback>
 					</Avatar>
 					<div className='ml-4 space-y-1'>
-						<p className='text-sm font-medium leading-none'>Olivia Martin</p>
-						<p className='text-sm text-muted-foreground'>olivia.martin@email.com</p>
+						<p className='text-sm font-medium leading-none'>{transaction.purpose}</p>
+						<p className='text-sm text-muted-foreground'>{new Date(transaction.date).toLocaleString('en-US', { dateStyle: 'medium' })}</p>
 					</div>
-					<div className='ml-auto font-medium'>
+					<div className={`ml-auto color  font-medium ${transaction.amount > 0.0 && 'text-green-600'}`}>
 						{transaction.amount > 0.0 && '+'}
 						{transaction.amount.toLocaleString('en-US', {
 							style: 'currency',

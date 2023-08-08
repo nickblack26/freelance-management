@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -13,9 +13,15 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	const { pending } = useFormStatus();
 
+	function onSubmit(formData: FormData) {
+		const email = formData.get('email');
+		const password = formData.get('password');
+		handleSignIn({ email, password });
+	}
+
 	return (
 		<div className={cn('grid gap-6', className)} {...props}>
-			<form action={handleSignIn}>
+			<form action={onSubmit}>
 				<div className='grid gap-2'>
 					<div className='grid gap-1'>
 						<Label className='sr-only' htmlFor='email'>

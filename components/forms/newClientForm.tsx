@@ -1,33 +1,42 @@
 'use client';
-
 import React from 'react';
-import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { addClient } from '@/app/actions';
+import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { useGlobalContext } from '@/app/context/store';
 
-const formSchema = z.object({
+const clientFormSchema = z.object({
 	name: z.string().min(1, {
+		message: 'Name must be at least 1 character.',
+	}),
+	business: z.string().min(1, {
 		message: 'Name must be at least 1 character.',
 	}),
 });
 
 const NewClientForm = () => {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const { pending } = useFormStatus();
+	const { organizationId } = useGlobalContext();
+
+	const form = useForm<z.infer<typeof clientFormSchema>>({
+		resolver: zodResolver(clientFormSchema),
 		defaultValues: {
 			name: '',
+			business: organizationId!,
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
+	function onSubmit(values: z.infer<typeof clientFormSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
+		values = { ...values, business: organizationId ? organizationId : '' };
 		console.log(values);
+		addClient(values);
 	}
 
 	return (

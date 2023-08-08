@@ -1,44 +1,28 @@
 import { Button } from '@/components/ui/button';
-import { columns } from './columns';
-import { DataTable } from './data-table';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import NewClientForm from '@/components/forms/newClientForm';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Transaction } from '@/components/recent-sales';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { PostgrestSingleResponse } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 
-export type Client = {
-	id: string;
-	name: string;
-	transactions?: Transaction[];
-	invoices?: string[];
-	projects?: string[];
-};
+const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
+	const supabase = createServerComponentClient<Database>({ cookies });
+	const { data, error } = await supabase.from('clients').select().eq('business', org_id);
 
-async function getData(): Promise<Client[]> {
-	const supabase = createServerComponentClient({ cookies });
-	const { data: clients }: PostgrestSingleResponse<Client[]> = await supabase.from('client').select();
-
-	if (clients && clients.length) {
-		return clients;
+	if (!data || error) {
+		throw Error(`${error}`);
 	}
-	return [];
-}
-
-const ClientsPage = async () => {
-	const data = await getData();
 
 	return (
-		<div>
+		<>
 			<div className='flex items-center justify-between mb-4'>
 				<h2 className='text-2xl font-semibold tracking-tight'>Clients</h2>
 				<Sheet>
-					<SheetTrigger>
+					<SheetTrigger asChild>
 						<Button>Add Client</Button>
 					</SheetTrigger>
-					<SheetContent>
+					<SheetContent className='w-[700px] sm:w-[900px]'>
 						<SheetHeader>
 							<SheetTitle>Create Client</SheetTitle>
 							<SheetDescription>
@@ -66,11 +50,31 @@ const ClientsPage = async () => {
 						<div className='text-2xl font-bold'>1,620</div>
 					</CardContent>
 				</Card>
-				<div className='col-span-2'>
-					<DataTable columns={columns} data={data} />
-				</div>
 			</div>
-		</div>
+			<div className='grid grid-cols-3 gap-4 pt-4'>
+				{data.map((client) => (
+					<Link key={client.id.toString()} href={`/${org_id}/clients/${client.id.toString()}`}>
+						<Card>
+							<CardHeader>
+								<div className='flex items-center gap-4'>
+									{/* <Avatar>
+										<AvatarFallback>{client.name[0]}</AvatarFallback>
+									</Avatar> */}
+									<div>
+										<CardTitle>{client.name}</CardTitle>
+										<CardDescription>Test</CardDescription>
+									</div>
+								</div>
+							</CardHeader>
+							<CardContent>
+								<div className='text-s'>$0.00</div>
+								<p className='text-xs text-muted-foreground'>0.00% of income</p>
+							</CardContent>
+						</Card>
+					</Link>
+				))}
+			</div>
+		</>
 	);
 };
 
