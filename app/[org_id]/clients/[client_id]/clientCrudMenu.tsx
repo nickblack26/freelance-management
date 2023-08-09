@@ -11,7 +11,7 @@ const ClientCrudMenu = () => {
 
 	const onClientDeletion = () => {
 		if (confirm('Are you sure?')) {
-			deleteClient<Database>(organizationId!, clientId!);
+			deleteClient(organizationId!, clientId!);
 		}
 	};
 
