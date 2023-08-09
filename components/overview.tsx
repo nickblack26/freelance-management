@@ -7,7 +7,7 @@ export type BarChartData = {
 	total: number;
 };
 
-export function Overview(data: []) {
+export function Overview(data: BarChartData[]) {
 	return (
 		<ResponsiveContainer width='100%' height={350}>
 			<BarChart data={data.transactions}>

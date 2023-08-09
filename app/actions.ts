@@ -25,7 +25,7 @@ export const handleSignIn = async ({ email, password }: { email: any; password: 
 export const handleSignOut = async () => {
 	'use server';
 	await supabase.auth.signOut();
-	revalidatePath('/[org_id]/');
+	revalidatePath('/');
 };
 
 export const createProject = async (project: ProjectFormValues) => {

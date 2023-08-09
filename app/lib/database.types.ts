@@ -330,27 +330,33 @@ export interface Database {
           client: string | null
           color: string | null
           description: string | null
+          end_date: string | null
           id: string
           maximum_revisions: number | null
           name: string
+          start_date: string | null
         }
         Insert: {
           business: string
           client?: string | null
           color?: string | null
           description?: string | null
+          end_date?: string | null
           id?: string
           maximum_revisions?: number | null
           name: string
+          start_date?: string | null
         }
         Update: {
           business?: string
           client?: string | null
           color?: string | null
           description?: string | null
+          end_date?: string | null
           id?: string
           maximum_revisions?: number | null
           name?: string
+          start_date?: string | null
         }
         Relationships: [
           {
@@ -373,6 +379,7 @@ export interface Database {
           description: string | null
           id: string
           name: string
+          occurence: string
           organization: string
         }
         Insert: {
@@ -380,6 +387,7 @@ export interface Database {
           description?: string | null
           id?: string
           name: string
+          occurence?: string
           organization: string
         }
         Update: {
@@ -387,6 +395,7 @@ export interface Database {
           description?: string | null
           id?: string
           name?: string
+          occurence?: string
           organization?: string
         }
         Relationships: [
@@ -567,6 +576,7 @@ export interface Database {
           project: string | null
           purpose: string
           repeat: string
+          status: string
           tax_amount: number | null
           tax_category: number | null
           tax_label: string | null
@@ -582,6 +592,7 @@ export interface Database {
           project?: string | null
           purpose: string
           repeat?: string
+          status?: string
           tax_amount?: number | null
           tax_category?: number | null
           tax_label?: string | null
@@ -597,6 +608,7 @@ export interface Database {
           project?: string | null
           purpose?: string
           repeat?: string
+          status?: string
           tax_amount?: number | null
           tax_category?: number | null
           tax_label?: string | null
@@ -705,21 +717,38 @@ export interface Database {
           client: string | null
           color: string | null
           description: string | null
+          end_date: string | null
           id: string
           maximum_revisions: number | null
           name: string
+          start_date: string | null
         }
       }
-      getbusinessoverview: {
+      get_business_overview: {
         Args: {
-          startdate: string
-          enddate: string
-          businessid: string
+          start_date: string
+          end_date: string
+          business_id: string
         }
         Returns: {
           name: string
           total: number
         }[]
+      }
+      get_outstanding_invoices: {
+        Args: {
+          start_date: string
+          end_date: string
+          business_id: string
+        }
+        Returns: number
+      }
+      get_total_projects_between_dates: {
+        Args: {
+          start_date: string
+          business_id: string
+        }
+        Returns: number
       }
       is_chat_member: {
         Args: {
