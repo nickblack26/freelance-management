@@ -2,7 +2,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface RecentTransactionsProps {
 	className?: React.HTMLAttributes<HTMLElement>;
-	transactions: Transaction[] | null;
+	transactions: {
+		id: string;
+		purpose: string;
+		date: string;
+		amount: number;
+	}[];
 }
 
 export function RecentSales({ className, transactions }: RecentTransactionsProps) {

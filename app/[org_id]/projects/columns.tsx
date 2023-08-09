@@ -1,15 +1,14 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Project } from '@/app/actions';
 
 export const columns: ColumnDef<Project>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',
 		cell: ({ row }) => {
-			const name = row.getValue('income');
-			const client = row.getValue('client');
+			const name = row.getValue<string>('income');
+			const client = row.getValue<Client>('client');
 
 			return (
 				<div className='text-right font-medium'>

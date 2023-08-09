@@ -75,9 +75,7 @@ const InvoicesPage = async ({ params: { org_id } }: { params: { org_id: string }
 					</Card>
 				))}
 			</div>
-			<div className='grid pt-4'>
-				<DataTable columns={columns} data={data} />
-			</div>
+			<div className='grid pt-4'>{/* <DataTable columns={columns} data={data satisfies Transaction[]} /> */}</div>
 		</>
 	);
 };

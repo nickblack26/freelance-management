@@ -55,7 +55,7 @@ const ProjectIntegrationsPage = () => {
 	return (
 		<div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4'>
 			{integrations.map((integration) => (
-				<Card key={integration.key}>
+				<Card key={integration.id}>
 					<CardHeader className='flex flex-row gap-4'>
 						<Image
 							width={48}

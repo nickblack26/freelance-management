@@ -1,7 +1,6 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Client } from './page';
 
 export const columns: ColumnDef<Client>[] = [
 	{

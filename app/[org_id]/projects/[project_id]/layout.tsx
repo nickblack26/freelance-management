@@ -1,7 +1,7 @@
 import SidebarLayout from '@/components/layouts/sidebarLayout';
 import React from 'react';
 
-const ProjectLayout = ({ children, params }: { children: React.ReactNode }) => {
+const ProjectLayout = ({ children, params }: { children: React.ReactNode; params: { org_id: string; project_id: string } }) => {
 	const { org_id, project_id } = params;
 	const sidebarItems: SidebarNavItem[] = [
 		{

@@ -97,10 +97,10 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 							</CardHeader>
 							<CardContent>
 								<div className='text-2xl font-bold'>
-									{client?.total_revenue?.toLocaleString('en-US', {
+									{/* {client?.total_revenue?.toLocaleString('en-US', {
 										style: 'currency',
 										currency: 'USD',
-									})}
+									})} */}
 								</div>
 								<p className='text-xs text-muted-foreground'>+20.1% from last month</p>
 							</CardContent>
@@ -112,10 +112,10 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 							</CardHeader>
 							<CardContent>
 								<div className='text-2xl font-bold'>
-									{client.total_income?.toLocaleString('en-US', {
+									{/* {client.total_income?.toLocaleString('en-US', {
 										style: 'currency',
 										currency: 'USD',
-									})}
+									})} */}
 								</div>
 								<p className='text-xs text-muted-foreground'>+20.1% from last month</p>
 							</CardContent>
@@ -128,10 +128,10 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 							</CardHeader>
 							<CardContent>
 								<div className='text-2xl font-bold'>
-									{client.total_expenses?.toLocaleString('en-US', {
+									{/* {client.total_expenses?.toLocaleString('en-US', {
 										style: 'currency',
 										currency: 'USD',
-									})}
+									})} */}
 								</div>
 								<p className='text-xs text-muted-foreground'>+19% from last month</p>
 							</CardContent>
@@ -193,7 +193,7 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 												<SheetTitle>Services</SheetTitle>
 											</SheetHeader>
 											<div className='grid gap-4'>
-												{client.project_services?.map(({ service }) => (
+												{/* {client.project_services?.map(({ service }) => (
 													<Card key={service.id}>
 														<CardHeader>
 															<div className='flex items-center justify-between'>
@@ -206,15 +206,15 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 																		})}
 																	</CardDescription>
 																</div>
-																{/* <Switch
+																<Switch
 																	checked={client.projects.some((project) =>
 																		project.services_provided.some((service_provided) => service_provided.id === service.id)
 																	)}
-																/> */}
+																/> 
 															</div>
 														</CardHeader>
 													</Card>
-												))}
+												))} */}
 											</div>
 										</SheetContent>
 									</Sheet>

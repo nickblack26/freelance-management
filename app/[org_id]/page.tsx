@@ -120,7 +120,7 @@ const HomePage = async ({ params: { org_id } }: { params: { org_id: string } }) 
 								<CardTitle>Overview</CardTitle>
 							</CardHeader>
 							<CardContent className='pl-2'>
-								<Overview data={overviewData} />
+								<Overview data={...overviewData} />
 							</CardContent>
 						</Card>
 						<Card className='col-span-3'>

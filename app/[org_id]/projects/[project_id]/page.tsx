@@ -13,7 +13,7 @@ const ProjectPage = async ({ params: { project_id } }: { params: { project_id: s
 	const { data: project, error } = await supabase.from('projects').select('id, project_services(service(*))').eq('id', project_id).single();
 
 	if (!project || error) {
-		throw Error(error);
+		throw Error(`${error}`);
 	}
 
 	return (
@@ -137,7 +137,7 @@ const ProjectPage = async ({ params: { project_id } }: { params: { project_id: s
 								</div>
 							</CardHeader>
 							<CardContent>
-								{project.project_services.map((project_service, index) => {
+								{/* {project.project_services.map((project_service, index) => {
 									const { service } = project_service;
 									console.log(project_service);
 									return (
@@ -152,7 +152,7 @@ const ProjectPage = async ({ params: { project_id } }: { params: { project_id: s
 											</div>
 										</div>
 									);
-								})}
+								})} */}
 							</CardContent>
 						</Card>
 					</div>
