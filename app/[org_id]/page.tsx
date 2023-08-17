@@ -4,11 +4,10 @@ import { RecentSales } from '@/components/recent-sales';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { parseMoney } from '@/lib/money';
+import { connectToServer } from '../lib/supabase';
 
-const supabase = createServerComponentClient<Database>({ cookies });
+const { supabase } = connectToServer();
 
 const getAllTransactions = async (org_id: string, startDate: string, endDate: string) => {
 	const { data, error } = await supabase

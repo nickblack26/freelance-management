@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
-import { BellIcon, GearIcon, PlusIcon } from '@radix-ui/react-icons';
+import { BellIcon, ClockIcon, GearIcon, PlayIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
 	DropdownMenu,
@@ -18,6 +18,9 @@ import { Button } from './ui/button';
 import { Search } from './search';
 import TeamSwitcher from './team-switcher';
 import { handleSignOut } from '@/app/actions';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Separator } from './ui/separator';
 
 export function MainNav({ org_id, className, ...props }: { org_id: string; className?: React.HTMLAttributes<HTMLElement> }) {
 	const links = [
@@ -31,36 +34,91 @@ export function MainNav({ org_id, className, ...props }: { org_id: string; class
 		{ href: `/${org_id}/transactions`, name: 'Transactions' },
 	];
 
+	let array = [...Array(5).keys()];
+
 	return (
 		<>
 			<div className='border-b'>
-				<div className='flex h-16 items-center justify-between px-10'>
+				<div className='flex h-16 items-center justify-between px-4'>
+					<TeamSwitcher />
+
 					<div className='flex items-center space-x-4'>
-						<Image src='/hourglass.svg' alt='Hourglass Logo' width={25} height={50} priority />
-						<TeamSwitcher />
-						<nav className={cn('flex items-center space-x-4 lg:space-x-6 w-full', className)} {...props}>
-							{links.map(({ href, name }) => (
-								<Link key={`${href}-${name}`} href={href} className='text-sm font-medium transition-colors hover:text-primary'>
-									{name}
-								</Link>
-							))}
-						</nav>
-					</div>
-					<div className='flex items-center space-x-4'>
+						<Popover>
+							<PopoverTrigger>
+								<ClockIcon />
+							</PopoverTrigger>
+							<PopoverContent align='end'>
+								<Tabs>
+									<TabsList className='w-full'>
+										<TabsTrigger className='w-full' value='mine'>
+											Mine
+										</TabsTrigger>
+										<TabsTrigger className='w-full' value='others'>
+											Others
+										</TabsTrigger>
+									</TabsList>
+									<TabsContent value='mine'>
+										<PlayIcon />
+
+										{array.map((item) => (
+											<div key={item} className='flex items-center'>
+												<p>03:05:32</p>
+												<p>Project</p>
+												<p>Client</p>
+											</div>
+										))}
+									</TabsContent>
+								</Tabs>
+							</PopoverContent>
+						</Popover>
 						<Search />
+					</div>
+
+					<div className='flex items-center space-x-4'>
 						<div className='flex flex-1 items-center gap-4 justify-end'>
-							<Link href={`/${org_id}/settings`} className='text-sm font-medium transition-colors hover:text-primary'>
-								<GearIcon />
-							</Link>
-							<Link href={`/${org_id}`} className='font-medium transition-colors hover:text-primary'>
-								<BellIcon />
-							</Link>
+							<Popover>
+								<PopoverTrigger>
+									<BellIcon />
+								</PopoverTrigger>
+								<PopoverContent>
+									<h2 className='text-lg font-semibold tracking-tight'>Notifications</h2>
+									<Separator className='my-2' />
+									{array.map((item) => (
+										<div key={item} className='flex items-center'>
+											<p>03:05:32</p>
+											<p>Project</p>
+											<p>Client</p>
+										</div>
+									))}
+								</PopoverContent>
+							</Popover>
+
 							<DropdownMenu>
-								<DropdownMenuTrigger>
-									<PlusIcon />
+								<DropdownMenuTrigger asChild>
+									<Button variant='outline'>
+										<PlusIcon className='mr-2 h-4 w-4' />
+										Create
+									</Button>
 								</DropdownMenuTrigger>
-								<DropdownMenuContent>
-									<p>Hello</p>
+								<DropdownMenuContent className='w-56'>
+									<DropdownMenuGroup>
+										<DropdownMenuItem>
+											New Project
+											<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											New Client
+											<DropdownMenuShortcut>⇧⌘C</DropdownMenuShortcut>
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											New Invoice
+											<DropdownMenuShortcut>⇧⌘I</DropdownMenuShortcut>
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											New Expense
+											<DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
+										</DropdownMenuItem>
+									</DropdownMenuGroup>
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</div>
@@ -83,8 +141,10 @@ export function MainNav({ org_id, className, ...props }: { org_id: string; class
 								<DropdownMenuSeparator />
 								<DropdownMenuGroup>
 									<DropdownMenuItem>
-										Profile
-										<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+										<Link className='flex-1 flex items-center justify-between' href={`/${org_id}/settings`}>
+											Profile
+											<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+										</Link>
 									</DropdownMenuItem>
 									<DropdownMenuItem>
 										Billing

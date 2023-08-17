@@ -4,55 +4,42 @@ import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import * as z from 'zod';
-
 import { cn } from '@/app/lib/utils';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { toast } from '../ui/use-toast';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const profileFormSchema = z.object({
-	username: z
-		.string()
-		.min(2, {
-			message: 'Username must be at least 2 characters.',
-		})
-		.max(30, {
-			message: 'Username must not be longer than 30 characters.',
-		}),
+	id: z.string(),
+	first_name: z.string().min(1, {
+		message: 'First name must be at least 1 character.',
+	}),
+	last_name: z.string().min(1, {
+		message: 'Last name must be at least 1 character.',
+	}),
+	username: z.string().min(1, {
+		message: 'Username must be at least 1 character.',
+	}),
 	email: z
 		.string({
 			required_error: 'Please select an email to display.',
 		})
 		.email(),
-	bio: z.string().max(160).min(4),
-	urls: z
-		.array(
-			z.object({
-				value: z.string().url({ message: 'Please enter a valid URL.' }),
-			})
-		)
-		.optional(),
+	image_url: z.string(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-	bio: 'I own a computer.',
-	urls: [{ value: 'https://shadcn.com' }, { value: 'http://twitter.com/shadcn' }],
-};
+export function ProfileForm({ user }: { user: User }) {
+	// This can come from your database or API.
+	const defaultValues: Partial<ProfileFormValues> = user;
 
-export function ProfileForm() {
 	const form = useForm<ProfileFormValues>({
 		resolver: zodResolver(profileFormSchema),
 		defaultValues,
 		mode: 'onChange',
-	});
-
-	const { fields, append } = useFieldArray({
-		name: 'urls',
-		control: form.control,
 	});
 
 	function onSubmit(data: ProfileFormValues) {
@@ -71,12 +58,58 @@ export function ProfileForm() {
 			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
 				<FormField
 					control={form.control}
+					name='image_url'
+					render={({ field }) => (
+						<FormItem className='flex items-center gap-4'>
+							<Avatar className=' h-24 w-24'>
+								<AvatarImage className='object-cover' src={field.value ?? undefined} />
+								<AvatarFallback></AvatarFallback>
+							</Avatar>
+							<FormControl>
+								<Input type='file' {...field} />
+							</FormControl>
+
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<div className='grid gap-4 lg:grid-cols-2 sm:grid-cols-1'>
+					<FormField
+						control={form.control}
+						name='first_name'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>First Name</FormLabel>
+								<FormControl>
+									<Input placeholder='John' {...field} />
+								</FormControl>
+
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='last_name'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Last Name</FormLabel>
+								<FormControl>
+									<Input placeholder='Smith' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
+				<FormField
+					control={form.control}
 					name='username'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Username</FormLabel>
 							<FormControl>
-								<Input placeholder='shadcn' {...field} />
+								<Input placeholder='jsmith' {...field} />
 							</FormControl>
 							<FormDescription>
 								This is your public display name. It can be your real name or a pseudonym. You can only change this once every 30 days.
@@ -99,44 +132,6 @@ export function ProfileForm() {
 						</FormItem>
 					)}
 				/>
-				<FormField
-					control={form.control}
-					name='bio'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Bio</FormLabel>
-							<FormControl>{/* <Textarea placeholder='Tell us a little bit about yourself' className='resize-none' {...field} /> */}</FormControl>
-							<FormDescription>
-								You can <span>@mention</span> other users and organizations to link to them.
-							</FormDescription>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<div>
-					{fields.map((field, index) => (
-						<FormField
-							control={form.control}
-							key={field.id}
-							name={`urls.${index}.value`}
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className={cn(index !== 0 && 'sr-only')}>URLs</FormLabel>
-									<FormDescription className={cn(index !== 0 && 'sr-only')}>
-										Add links to your website, blog, or social media profiles.
-									</FormDescription>
-									<FormControl>
-										<Input {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					))}
-					<Button type='button' variant='outline' size='sm' className='mt-2' onClick={() => append({ value: '' })}>
-						Add URL
-					</Button>
-				</div>
 				<Button type='submit'>Update profile</Button>
 			</form>
 		</Form>

@@ -2,38 +2,12 @@ import NewProjectForm from '@/components/forms/newProjectForm';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { PostgrestSingleResponse } from '@supabase/postgrest-js';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { cookies } from 'next/headers';
 import Link from 'next/link';
-
-const supabase = createServerComponentClient<Database>({ cookies });
-
-async function getClients(org_id: string): Promise<Client[]> {
-	const { data, error } = await supabase.from('clients').select().eq('business', org_id);
-
-	if (!data || error) {
-		throw Error(`${error}`);
-	}
-
-	return data;
-}
-
-async function getProjects(): Promise<Project[]> {
-	const { data, error } = await supabase.from('projects').select();
-
-	if (!data || error) {
-		throw Error(`${error}`);
-	}
-
-	return data;
-}
+import { getClients, getProjects } from '@/app/lib/helpers';
 
 const ProjectsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
-	const [clients, projects] = await Promise.all([getClients(org_id), getProjects()]);
-
-	console.log(projects);
+	const [clients, projects] = await Promise.all([getClients(org_id), getProjects(org_id)]);
 
 	return (
 		<>

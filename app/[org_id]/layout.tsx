@@ -1,24 +1,21 @@
-'use client';
 import { MainNav } from '@/components/navbar';
-import { useEffect } from 'react';
-import { useGlobalContext } from '../context/store';
+import { SidebarNav } from '@/components/sidebar-nav';
+import { getClients, getProjects } from '../lib/helpers';
 
-const OrganizationLayout = ({ params, children }: { params: { org_id: string }; children: React.ReactNode }) => {
+const OrganizationLayout = async ({ params, children }: { params: { org_id: string }; children: React.ReactNode }) => {
 	const { org_id } = params;
-	const { setOrganizationId } = useGlobalContext();
-
-	useEffect(() => {
-		setOrganizationId(org_id);
-
-		return () => {
-			setOrganizationId(null);
-		};
-	}, [org_id]);
+	const clients = await getClients(org_id);
+	const projects = await getProjects(org_id);
 
 	return (
-		<div className='flex flex-col h-full'>
+		<div className='flex flex-col h-screen'>
 			<MainNav org_id={org_id} />
-			<div className='p-10'>{children}</div>
+			<div className='h-full flex flex-col lg:flex-row '>
+				<aside className='lg:w-1/6 border-r'>
+					<SidebarNav org_id={org_id} clients={clients} projects={projects} />
+				</aside>
+				<div className='flex-1 p-4'>{children}</div>
+			</div>
 		</div>
 	);
 };

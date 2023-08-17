@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ArrowDownIcon, ArrowUpIcon, ClockIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Switch } from '@/components/ui/switch';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -14,22 +13,10 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import ClientCrudMenu from './clientCrudMenu';
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-
-const supabase = createServerComponentClient<Database>({ cookies });
-
-const getClientDetails = async (client_id: string) => {
-	const { data, error } = await supabase.from('clients').select('*, projects(id, name, project_services(service(*)))').eq('id', client_id).single();
-	if (error) {
-		throw Error(`${error}`);
-	}
-
-	return data;
-};
+import { getClient } from '@/app/lib/helpers';
 
 const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id: string; client_id: string } }) => {
-	const client = await getClientDetails(client_id);
+	const client = await getClient(client_id);
 
 	return (
 		<div>

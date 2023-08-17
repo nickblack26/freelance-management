@@ -2,8 +2,9 @@ import type { Database as DB } from '@/app/lib/database.types';
 
 declare global {
 	type Database = DB;
-	interface Business extends DB['public']['Tables']['businesses']['Row'] {
-		transactions?: Transaction[];
+	type B = DB['public']['Tables']['businesses']['Row'];
+	interface Business extends B {
+		services?: Service[];
 	}
 	type BusinessMember = DB['public']['Tables']['business_members']['Row'];
 	type BusinessUserRole = DB['public']['Tables']['business_user_role']['Row'];
@@ -13,13 +14,11 @@ declare global {
 	type InvoiceLineItems = DB['public']['Tables']['invoice_line_items']['Row'];
 	type LineItem = DB['public']['Tables']['line_items']['Row'];
 	type Merchant = DB['public']['Tables']['merchants']['Row'];
-	interface Project extends DB['public']['Tables']['projects']['Row'] {
+	type Project = DB['public']['Tables']['projects']['Row'];
+	interface ProjectWithService extends Project {
 		project_services?: ProjectService[];
 	}
-	interface ProjectService extends DB['public']['Tables']['project_services']['Row'] {
-		project: Project;
-		service: Service;
-	}
+	type ProjectService = DB['public']['Tables']['project_services']['Row'];
 	type Service = DB['public']['Tables']['services']['Row'];
 	type Subscription = DB['public']['Tables']['subscriptions']['Row'];
 	type Task = DB['public']['Tables']['tasks']['Row'];

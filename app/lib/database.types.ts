@@ -376,32 +376,32 @@ export interface Database {
       services: {
         Row: {
           amount: number
+          business: string
           description: string | null
           id: string
           name: string
           occurence: string
-          organization: string
         }
         Insert: {
           amount: number
+          business: string
           description?: string | null
           id?: string
           name: string
           occurence?: string
-          organization: string
         }
         Update: {
           amount?: number
+          business?: string
           description?: string | null
           id?: string
           name?: string
           occurence?: string
-          organization?: string
         }
         Relationships: [
           {
-            foreignKeyName: "services_organization_fkey"
-            columns: ["organization"]
+            foreignKeyName: "services_business_fkey"
+            columns: ["business"]
             referencedRelation: "businesses"
             referencedColumns: ["id"]
           }
@@ -425,65 +425,72 @@ export interface Database {
         }
         Relationships: []
       }
+      task_assignees: {
+        Row: {
+          task_id: string
+          user_id: string
+        }
+        Insert: {
+          task_id: string
+          user_id: string
+        }
+        Update: {
+          task_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_assignees_task_id_fkey"
+            columns: ["task_id"]
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_assignees_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       tasks: {
         Row: {
-          assignee: string | null
-          client: string | null
           complete: boolean
           completed_at: string | null
           created_at: string
           description: string | null
           due_date: string | null
           id: string
-          list: string | null
           name: string
           project: string | null
           start_date: string | null
           updated_at: string | null
         }
         Insert: {
-          assignee?: string | null
-          client?: string | null
           complete?: boolean
           completed_at?: string | null
           created_at?: string
           description?: string | null
           due_date?: string | null
           id?: string
-          list?: string | null
           name: string
           project?: string | null
           start_date?: string | null
           updated_at?: string | null
         }
         Update: {
-          assignee?: string | null
-          client?: string | null
           complete?: boolean
           completed_at?: string | null
           created_at?: string
           description?: string | null
           due_date?: string | null
           id?: string
-          list?: string | null
           name?: string
           project?: string | null
           start_date?: string | null
           updated_at?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "tasks_assignee_fkey"
-            columns: ["assignee"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "tasks_client_fkey"
-            columns: ["client"]
-            referencedRelation: "clients"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "tasks_project_fkey"
             columns: ["project"]
@@ -571,7 +578,7 @@ export interface Database {
           business: string | null
           date: string
           id: string
-          invoice: string | null
+          merchant: string | null
           note: string | null
           project: string | null
           purpose: string
@@ -587,7 +594,7 @@ export interface Database {
           business?: string | null
           date: string
           id?: string
-          invoice?: string | null
+          merchant?: string | null
           note?: string | null
           project?: string | null
           purpose: string
@@ -603,7 +610,7 @@ export interface Database {
           business?: string | null
           date?: string
           id?: string
-          invoice?: string | null
+          merchant?: string | null
           note?: string | null
           project?: string | null
           purpose?: string
@@ -622,9 +629,9 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "transactions_invoice_fkey"
-            columns: ["invoice"]
-            referencedRelation: "invoices"
+            foreignKeyName: "transactions_merchant_fkey"
+            columns: ["merchant"]
+            referencedRelation: "merchants"
             referencedColumns: ["id"]
           },
           {
@@ -643,31 +650,25 @@ export interface Database {
       }
       users: {
         Row: {
-          first_name: string | null
-          hourly_rate: number | null
+          first_name: string
           id: string
           image_url: string | null
-          last_name: string | null
-          online: boolean
-          yearly_salary: number | null
+          last_name: string
+          username: string
         }
         Insert: {
-          first_name?: string | null
-          hourly_rate?: number | null
+          first_name: string
           id: string
           image_url?: string | null
-          last_name?: string | null
-          online?: boolean
-          yearly_salary?: number | null
+          last_name: string
+          username: string
         }
         Update: {
-          first_name?: string | null
-          hourly_rate?: number | null
+          first_name?: string
           id?: string
           image_url?: string | null
-          last_name?: string | null
-          online?: boolean
-          yearly_salary?: number | null
+          last_name?: string
+          username?: string
         }
         Relationships: [
           {
@@ -723,6 +724,19 @@ export interface Database {
           name: string
           start_date: string | null
         }
+      }
+      delete_avatar: {
+        Args: {
+          avatar_url: string
+        }
+        Returns: Record<string, unknown>
+      }
+      delete_storage_object: {
+        Args: {
+          bucket: string
+          object: string
+        }
+        Returns: Record<string, unknown>
       }
       get_business_overview: {
         Args: {

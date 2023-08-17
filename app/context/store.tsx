@@ -1,5 +1,5 @@
 'use client';
-import React, { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
+import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react';
 
 // Define the type for the context data
 interface ContextData {
@@ -14,6 +14,9 @@ interface ContextData {
 
 	clientId: string | null;
 	setClientId: Dispatch<SetStateAction<string | null>>;
+
+	userUrl: string | null;
+	setUserUrl: Dispatch<SetStateAction<string | null>>;
 }
 
 // Create the context
@@ -26,6 +29,8 @@ const GlobalContext = createContext<ContextData>({
 	setUserId: (): string => '',
 	clientId: null,
 	setClientId: (): string => '',
+	userUrl: null,
+	setUserUrl: (): string => '',
 });
 
 // Create a provider for components to consume and subscribe to changes
@@ -38,9 +43,12 @@ export const GlobalContextProvider = ({ children }: GlobalContextProviderProps) 
 	const [projectId, setProjectId] = useState<string | null>(null);
 	const [userId, setUserId] = useState<string | null>(null);
 	const [clientId, setClientId] = useState<string | null>(null);
+	const [userUrl, setUserUrl] = useState<string | null>(null);
 
 	return (
-		<GlobalContext.Provider value={{ organizationId, setOrganizationId, projectId, setProjectId, userId, setUserId, clientId, setClientId }}>
+		<GlobalContext.Provider
+			value={{ organizationId, setOrganizationId, projectId, setProjectId, userId, setUserId, clientId, setClientId, userUrl, setUserUrl }}
+		>
 			{children}
 		</GlobalContext.Provider>
 	);

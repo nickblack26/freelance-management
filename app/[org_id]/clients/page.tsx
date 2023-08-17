@@ -2,17 +2,11 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import NewClientForm from '@/components/forms/newClientForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { getClients } from '@/app/lib/helpers';
 
 const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
-	const supabase = createServerComponentClient<Database>({ cookies });
-	const { data, error } = await supabase.from('clients').select().eq('business', org_id);
-
-	if (!data || error) {
-		throw Error(`${error}`);
-	}
+	const clients = await getClients(org_id);
 
 	return (
 		<>
@@ -52,7 +46,7 @@ const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } 
 				</Card>
 			</div>
 			<div className='grid grid-cols-3 gap-4 pt-4'>
-				{data.map((client) => (
+				{clients.map((client) => (
 					<Link key={client.id.toString()} href={`/${org_id}/clients/${client.id.toString()}`}>
 						<Card>
 							<CardHeader>

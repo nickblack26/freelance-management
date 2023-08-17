@@ -3,14 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
+import { DataTable } from '../clients/data-table';
+import { columns } from './columns';
+import { getTransactions } from '@/app/lib/helpers';
 
-const TransactionsPage = async () => {
+const TransactionsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
+	const transactions = await getTransactions(org_id);
+
+	console.log(transactions);
 	return (
 		<div>
 			<div className='flex items-center justify-between mb-4'>
 				<h2 className='text-2xl font-semibold tracking-tight'>Clients</h2>
 				<Sheet>
-					<SheetTrigger>
+					<SheetTrigger asChild>
 						<Button>New Expense</Button>
 					</SheetTrigger>
 					<SheetContent>
@@ -51,6 +57,9 @@ const TransactionsPage = async () => {
 				<Card>
 					<CardTitle>One Time</CardTitle>
 				</Card>
+			</div>
+			<div className='mt-4'>
+				<DataTable columns={columns} data={transactions} />
 			</div>
 		</div>
 	);

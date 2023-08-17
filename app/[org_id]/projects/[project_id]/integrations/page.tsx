@@ -10,7 +10,7 @@ const integrations = [
 	{
 		id: 1,
 		name: 'ChatGPT',
-		image: '/openai.svg',
+		image: '/openai.png',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
 		enabled: false,
 	},
@@ -37,8 +37,8 @@ const integrations = [
 	},
 	{
 		id: 5,
-		name: 'Square',
-		image: '/square.svg',
+		name: 'Github',
+		image: '/github.png',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
 		enabled: false,
 	},
