@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import NewClientForm from '@/components/forms/newClientForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
-import { getClients } from '@/app/lib/helpers';
+import { getClients } from '@/lib/helpers';
 
 const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
 	const clients = await getClients(org_id);
@@ -27,7 +27,7 @@ const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } 
 					</SheetContent>
 				</Sheet>
 			</div>
-			<div className='grid grid-cols-2 gap-4'>
+			<div className='grid grid-cols-2 gap-3'>
 				<Card>
 					<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 						<CardTitle className='text-sm font-medium'>Active Clients</CardTitle>
@@ -45,12 +45,12 @@ const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } 
 					</CardContent>
 				</Card>
 			</div>
-			<div className='grid grid-cols-3 gap-4 pt-4'>
+			<div className='grid grid-cols-3 gap-3 pt-4'>
 				{clients.map((client) => (
 					<Link key={client.id.toString()} href={`/${org_id}/clients/${client.id.toString()}`}>
 						<Card>
 							<CardHeader>
-								<div className='flex items-center gap-4'>
+								<div className='flex items-center gap-3'>
 									{/* <Avatar>
 										<AvatarFallback>{client.name[0]}</AvatarFallback>
 									</Avatar> */}

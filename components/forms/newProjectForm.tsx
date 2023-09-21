@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { CaretSortIcon, CheckIcon, ReloadIcon } from '@radix-ui/react-icons';
-import { cn } from '@/app/lib/utils';
+import { cn } from '@/lib/utils';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import { createProject } from '@/app/actions';
 import { useGlobalContext } from '@/app/context/store';

@@ -13,7 +13,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import ClientCrudMenu from './clientCrudMenu';
-import { getClient } from '@/app/lib/helpers';
+import { getClient } from '@/lib/helpers';
 
 const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id: string; client_id: string } }) => {
 	const client = await getClient(client_id);
@@ -21,7 +21,7 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 	return (
 		<div>
 			<div className='flex items-center justify-between mb-2'>
-				<div className='flex items-center gap-4'>
+				<div className='flex items-center gap-3'>
 					<h2 className='text-3xl font-bold tracking-tight'>{client.name}</h2>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
@@ -65,7 +65,7 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 					</TabsTrigger>
 				</TabsList>
 				<TabsContent value='overview' className='space-y-4'>
-					<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+					<div className='grid gap-3 md:grid-cols-2 lg:grid-cols-4'>
 						<Card>
 							<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 								<CardTitle className='text-sm font-medium'>Total Revenue</CardTitle>
@@ -157,7 +157,7 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 							</CardContent>
 						</Card> */}
 					</div>
-					<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+					<div className='grid gap-3 md:grid-cols-2 lg:grid-cols-4'>
 						<Card className='sm:col-span-1 md:col-span-2 lg:col-span-3'>
 							<CardHeader>
 								<CardTitle>Overview</CardTitle>
@@ -179,7 +179,7 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 											<SheetHeader>
 												<SheetTitle>Services</SheetTitle>
 											</SheetHeader>
-											<div className='grid gap-4'>
+											<div className='grid gap-3'>
 												{/* {client.project_services?.map(({ service }) => (
 													<Card key={service.id}>
 														<CardHeader>

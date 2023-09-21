@@ -1,4 +1,4 @@
-import { connectToServer } from '@/app/lib/supabase';
+import { connectToServer } from '@/lib/supabase';
 import { ProfileForm } from '@/components/forms/profile-form';
 import { Separator } from '@/components/ui/separator';
 import React from 'react';

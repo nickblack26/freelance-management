@@ -45,7 +45,7 @@ const CreateBusiness = () => {
 							<p className='text-md text-muted-foreground'>Creating your company is just a few steps away.</p>
 							<Card className='shadow-none mt-16 hover:cursor-pointer' onClick={() => setStep(step + 1)}>
 								<CardHeader className='flex flex-row items-center justify-between'>
-									<div className='flex items-center gap-4'>
+									<div className='flex items-center gap-3'>
 										<div className='rounded-lg border p-2'>
 											<PersonIcon className='h-8 w-8' />
 										</div>
@@ -59,7 +59,7 @@ const CreateBusiness = () => {
 							</Card>
 							<Card className='shadow-none mt-6 hover:cursor-pointer bg-primary/5' onClick={() => setStep(step + 1)}>
 								<CardHeader className='flex flex-row items-center justify-between'>
-									<div className='flex items-center gap-4'>
+									<div className='flex items-center gap-3'>
 										<div className='rounded-lg border p-2'>
 											<HomeIcon className='h-8 w-8' />
 										</div>

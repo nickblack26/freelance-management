@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import React from 'react';
 import { DataTable } from '../clients/data-table';
 import { columns } from './columns';
-import { getTransactions } from '@/app/lib/helpers';
+import { getTransactions } from '@/lib/helpers';
 
 const TransactionsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
 	const transactions = await getTransactions(org_id);
@@ -30,7 +30,7 @@ const TransactionsPage = async ({ params: { org_id } }: { params: { org_id: stri
 					</SheetContent>
 				</Sheet>
 			</div>
-			<div className='grid grid-cols-2 gap-4'>
+			<div className='grid grid-cols-2 gap-3'>
 				<Card>
 					<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 						<CardTitle className='text-2xl font-bold'>Subscriptions</CardTitle>

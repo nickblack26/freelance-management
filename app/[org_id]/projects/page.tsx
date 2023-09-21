@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
-import { getClients, getProjects } from '@/app/lib/helpers';
+import { getClients, getProjects } from '@/lib/helpers';
 
 const ProjectsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
 	const [clients, projects] = await Promise.all([getClients(org_id), getProjects(org_id)]);
@@ -28,12 +28,12 @@ const ProjectsPage = async ({ params: { org_id } }: { params: { org_id: string }
 					</SheetContent>
 				</Sheet>
 			</div>
-			<div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4'>
+			<div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3'>
 				{projects.map((project) => (
 					<Link key={project.id} href={`/${org_id}/projects/${project.id}`}>
 						<Card>
 							<CardHeader>
-								<div className='flex items-center gap-4'>
+								<div className='flex items-center gap-3'>
 									{/* <Avatar>
 										<AvatarFallback>{client.name[0]}</AvatarFallback>
 									</Avatar> */}

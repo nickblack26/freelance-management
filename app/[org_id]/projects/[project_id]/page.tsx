@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProjectOverviewPage from './overview';
-import { getBusiness, getProject } from '@/app/lib/helpers';
+import { getBusiness, getProject } from '@/lib/helpers';
 import { Separator } from '@/components/ui/separator';
 import { DataTable } from './tasks/data-table';
 import { columns } from './tasks/columns';

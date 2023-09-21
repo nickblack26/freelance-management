@@ -11,8 +11,6 @@ export async function middleware(req: NextRequest) {
 
 	if (!session) return NextResponse.redirect(new URL('/login', req.url));
 
-	console.log(session);
-
 	// if user is signed in and the current path is / redirect the user to /account
 	if (session?.user) {
 		return NextResponse.redirect(new URL(`/${session.user.user_metadata.organizations[0]}`, req.url));

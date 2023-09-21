@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { cn } from '@/app/lib/utils';
+import { cn } from '@/lib/utils';
 import { ColorWheelIcon } from '@radix-ui/react-icons';
 
 export function GradientPicker({

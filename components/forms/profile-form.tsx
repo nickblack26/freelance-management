@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { cn } from '@/app/lib/utils';
+import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
@@ -60,7 +60,7 @@ export function ProfileForm({ user }: { user: User }) {
 					control={form.control}
 					name='image_url'
 					render={({ field }) => (
-						<FormItem className='flex items-center gap-4'>
+						<FormItem className='flex items-center gap-3'>
 							<Avatar className=' h-24 w-24'>
 								<AvatarImage className='object-cover' src={field.value ?? undefined} />
 								<AvatarFallback></AvatarFallback>
@@ -73,7 +73,7 @@ export function ProfileForm({ user }: { user: User }) {
 						</FormItem>
 					)}
 				/>
-				<div className='grid gap-4 lg:grid-cols-2 sm:grid-cols-1'>
+				<div className='grid gap-3 lg:grid-cols-2 sm:grid-cols-1'>
 					<FormField
 						control={form.control}
 						name='first_name'

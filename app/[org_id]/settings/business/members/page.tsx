@@ -14,7 +14,7 @@ const BusinessMembersPage = ({ params: { org_id } }: { params: { org_id: string 
 				</div>
 			</div>
 
-			<div className='grid grid-cols-5 gap-4 w-full max-w-5xl mx-auto place-items-center my-8'>
+			<div className='grid grid-cols-5 gap-3 w-full max-w-5xl mx-auto place-items-center my-8'>
 				<div className='text-center w-full'>
 					<h2 className='text-3xl font-bold tracking-tight'>1</h2>
 					<p className='text-sm text-secondary-foreground tracking-tight'>Members</p>

@@ -1,6 +1,6 @@
 import { buttonVariants } from '@/components/ui/button';
 import { UserAuthForm } from '@/components/user-auth-form';
-import { cn } from '@/app/lib/utils';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';

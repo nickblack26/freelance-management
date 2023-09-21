@@ -1,4 +1,4 @@
-import { connectToServer } from '@/app/lib/supabase';
+import { connectToServer } from '@/lib/supabase';
 import React from 'react';
 
 const SettingsAccountPage = async () => {

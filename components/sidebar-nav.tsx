@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/app/lib/utils';
+import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { BarChartIcon, BellIcon, CheckCircledIcon, HomeIcon } from '@radix-ui/react-icons';
 import { ScrollArea } from './ui/scroll-area';

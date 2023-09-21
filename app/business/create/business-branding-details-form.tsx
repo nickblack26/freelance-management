@@ -1,4 +1,4 @@
-import { cn } from '@/app/lib/utils';
+import { cn } from '@/lib/utils';
 import { GradientPicker } from '@/components/color-picker';
 import React, { useState } from 'react';
 import { z } from 'zod';

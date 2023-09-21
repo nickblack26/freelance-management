@@ -63,7 +63,7 @@ const InvoicesPage = async ({ params: { org_id } }: { params: { org_id: string }
 					</SheetContent>
 				</Sheet>
 			</div>
-			<div className='grid grid-cols-5 gap-4'>
+			<div className='grid grid-cols-5 gap-3'>
 				{cardFilters.map((filter) => (
 					<Card key={`${filter.title}-${filter.total}`}>
 						<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>

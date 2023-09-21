@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { parseMoney } from '@/lib/money';
-import { connectToServer } from '../lib/supabase';
+import { connectToServer } from '@/lib/supabase';
 
 const { supabase } = connectToServer();
 
@@ -75,7 +75,7 @@ const HomePage = async ({ params: { org_id } }: { params: { org_id: string } }) 
 					</TabsTrigger>
 				</TabsList>
 				<TabsContent value='overview' className='space-y-4'>
-					<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+					<div className='grid gap-3 md:grid-cols-2 lg:grid-cols-4'>
 						<Card>
 							<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 								<CardTitle className='text-sm font-medium'>Total Revenue</CardTitle>
@@ -113,7 +113,7 @@ const HomePage = async ({ params: { org_id } }: { params: { org_id: string } }) 
 							</CardContent>
 						</Card>
 					</div>
-					<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
+					<div className='grid gap-3 md:grid-cols-2 lg:grid-cols-7'>
 						<Card className='col-span-4'>
 							<CardHeader>
 								<CardTitle>Overview</CardTitle>

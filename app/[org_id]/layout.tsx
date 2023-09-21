@@ -1,6 +1,7 @@
+import ProjectSidebar from '@/components/ProjectSidebar';
 import { MainNav } from '@/components/navbar';
 import { SidebarNav } from '@/components/sidebar-nav';
-import { getClients, getProjects } from '../lib/helpers';
+import { getClients, getProjects } from '@/lib/helpers';
 
 const OrganizationLayout = async ({ params, children }: { params: { org_id: string }; children: React.ReactNode }) => {
 	const { org_id } = params;
@@ -9,10 +10,10 @@ const OrganizationLayout = async ({ params, children }: { params: { org_id: stri
 
 	return (
 		<div className='flex flex-col h-screen'>
-			<MainNav org_id={org_id} />
+			<MainNav org_id={org_id} projects={projects} />
 			<div className='h-full flex flex-col lg:flex-row '>
 				<aside className='lg:w-1/6 border-r'>
-					<SidebarNav org_id={org_id} clients={clients} projects={projects} />
+					<ProjectSidebar />
 				</aside>
 				<div className='flex-1 p-4'>{children}</div>
 			</div>

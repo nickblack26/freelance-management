@@ -1,4 +1,4 @@
-import { getProject } from '@/app/lib/helpers';
+import { getProject } from '@/lib/helpers';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -18,7 +18,7 @@ const ProjectLayout = async ({ children, params }: { children: React.ReactNode; 
 
 	return (
 		<div>
-			<div className='flex items-center gap-4 space-y-0.5'>
+			<div className='flex items-center gap-3 space-y-0.5'>
 				<h2 className='text-2xl font-bold tracking-tight'>{project.name}</h2>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>

@@ -53,10 +53,10 @@ const integrations = [
 
 const ProjectIntegrationsPage = () => {
 	return (
-		<div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4'>
+		<div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3'>
 			{integrations.map((integration) => (
 				<Card key={integration.id}>
-					<CardHeader className='flex flex-row gap-4'>
+					<CardHeader className='flex flex-row gap-3'>
 						<Image
 							width={48}
 							height={48}
@@ -76,9 +76,9 @@ const ProjectIntegrationsPage = () => {
 					</CardContent>
 
 					<CardContent>
-						<div className='flex items-center justify-between gap-4'>
+						<div className='flex items-center justify-between gap-3'>
 							{integration.enabled ? <Button variant='outline'>Modify Connection</Button> : <div></div>}
-							<div className='flex items-center gap-4'>
+							<div className='flex items-center gap-3'>
 								<GearIcon />
 								<Switch checked={integration.enabled} id={`${integration.name.toLowerCase()}-enabled`} />
 							</div>
