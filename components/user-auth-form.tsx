@@ -1,13 +1,14 @@
 'use client';
 import * as React from 'react';
+import { useFormStatus } from 'react-dom';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { ReloadIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
-import { handleSignIn } from '@/app/actions';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { handleSignIn, signInWithGithub } from '@/app/actions';
 import { redirect } from 'next/navigation';
+import SubmitButton from './submit-button';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -15,8 +16,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	const { pending } = useFormStatus();
 
 	async function onSubmit(formData: FormData) {
-		const email = formData.get('email');
-		const password = formData.get('password');
+		const email = formData.get('email') as string;
+		const password = formData.get('password') as string;
 		if (!email || !password) return;
 		const user = await handleSignIn({ email, password });
 
@@ -59,10 +60,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							disabled={pending}
 						/>
 					</div>
-					<Button>
-						{pending && <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />}
-						Sign In
-					</Button>
+					<SubmitButton>Sign in</SubmitButton>
 				</div>
 			</form>
 			<div className='relative'>
@@ -73,7 +71,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 					<span className='bg-background px-2 text-muted-foreground'>Or continue with</span>
 				</div>
 			</div>
-			<Button variant='outline' type='button'>
+			<Button variant='outline' formAction={signInWithGithub}>
 				{pending ? <ReloadIcon className='mr-2 h-4 w-4 animate-spin' /> : <GitHubLogoIcon className='mr-2 h-4 w-4' />} Github
 			</Button>
 		</div>

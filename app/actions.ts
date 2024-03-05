@@ -1,15 +1,13 @@
 'use server';
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 import { PostgrestSingleResponse } from '@supabase/postgrest-js';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { ProjectFormValues } from '@/components/forms/newProjectForm';
 import { stripe } from '@/utils/stripe';
 import { BusinessDetailFormValues } from './business/create/business-details-form';
+import { createClient } from '@/utils/supabase/server';
 
 export async function uploadFile(table: string, path: string, file: File) {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	try {
 		const { data, error } = await supabase.storage.from(table).upload(path, file, {
@@ -25,13 +23,14 @@ export async function uploadFile(table: string, path: string, file: File) {
 }
 
 export const handleSignIn = async ({ email, password }: { email: string; password: string }) => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	const { data, error } = await supabase.auth.signInWithPassword({
 		email,
 		password,
 	});
+
+	console.log(data);
 
 	if (!data && error) {
 		throw Error(`${error}`);
@@ -41,8 +40,7 @@ export const handleSignIn = async ({ email, password }: { email: string; passwor
 };
 
 export const handleCreateUser = async (email: string, password: string, metadata: object) => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	try {
 		const { data, error } = await supabase.auth.signUp({
@@ -62,16 +60,15 @@ export const handleCreateUser = async (email: string, password: string, metadata
 };
 
 export const handleSignOut = async () => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	await supabase.auth.signOut();
 	revalidatePath('/');
 };
 
 export const updateUserMetadata = async (metadata: object) => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
+
 	const {
 		data: { session },
 	} = await supabase.auth.getSession();
@@ -89,9 +86,8 @@ export const updateUserMetadata = async (metadata: object) => {
 };
 
 export const createProject = async (project: ProjectFormValues) => {
-	'use server';
+	const supabase = createClient();
 	if (!project) return;
-	const supabase = createServerActionClient<Database>({ cookies });
 
 	const { error, data } = await supabase.from('projects').insert(project).select().single();
 
@@ -106,8 +102,7 @@ export const createProject = async (project: ProjectFormValues) => {
 };
 
 export const deleteProject = async (projectId: string) => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	const { error } = await supabase.from('projects').delete().eq('id', projectId);
 
@@ -119,8 +114,7 @@ export const deleteProject = async (projectId: string) => {
 };
 
 export const addClient = async (item: any) => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	const { data, error } = await supabase.from('clients').insert(item).select().single();
 	if (!data || error) {
@@ -131,15 +125,13 @@ export const addClient = async (item: any) => {
 };
 
 export const deleteClient = async (organizationId: string, client_id: string) => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	revalidatePath('/');
 };
 
 export const getTransactions = async () => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
 
 	const { error, data }: PostgrestSingleResponse<Transaction[]> = await supabase.from('transaction').select();
 
@@ -152,8 +144,8 @@ export const getTransactions = async () => {
 };
 
 export const createBusiness = async (business: BusinessDetailFormValues) => {
-	'use server';
-	const supabase = createServerActionClient<Database>({ cookies });
+	const supabase = createClient();
+
 	try {
 		const { data, error } = await supabase.from('businesses').insert(business).select('*');
 		if (!data || error) throw error;
@@ -165,8 +157,6 @@ export const createBusiness = async (business: BusinessDetailFormValues) => {
 };
 
 export const createCheckout = async (priceId: string, orgId: string) => {
-	'use server';
-
 	const session = await stripe.checkout.sessions.create({
 		mode: 'subscription',
 		payment_method_types: ['card'],
@@ -177,3 +167,15 @@ export const createCheckout = async (priceId: string, orgId: string) => {
 
 	return session;
 };
+
+export async function signInWithGithub() {
+	const supabase = createClient();
+	const { data, error } = await supabase.auth.signInWithOAuth({
+		provider: 'github',
+		options: {
+			redirectTo: '/d552242b-4403-4e76-b122-ad8365113e9d/',
+		},
+	});
+
+	console.log(error, data);
+}
