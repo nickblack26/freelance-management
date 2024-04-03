@@ -15,7 +15,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang='en' suppressHydrationWarning>
 			<body className={inter.className}>
 				<Providers>
-					<main className='dark text-foreground bg-background'>{children}</main>
+					{/* className='dark text-foreground bg-background' */}
+					<main className='dark:dark dark:text-foreground dark:bg-background '>{children}</main>
 				</Providers>
 			</body>
 		</html>

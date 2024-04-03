@@ -61,7 +61,7 @@ export async function middleware(request: NextRequest) {
 
 		// if user is signed in and the current path is / redirect the user to /account
 		if (user && request.nextUrl.pathname === '/') {
-			return NextResponse.redirect(new URL(`/${'velo-it-group'}/`, request.url));
+			return NextResponse.redirect(new URL(`/d552242b-4403-4e76-b122-ad8365113e9d/`, request.url));
 		}
 
 		//

@@ -1,18 +1,19 @@
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
+import { Integration } from '@/types/helper.types';
 import { GearIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 
-const integrations = [
+export const integrations: Integration[] = [
 	{
 		id: 1,
 		name: 'ChatGPT',
-		image: '/openai.png',
+		image: '/openai.svg',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
 		enabled: false,
+		color: '#000',
 	},
 	{
 		id: 2,
@@ -20,6 +21,7 @@ const integrations = [
 		image: '/mailchimp.jpg',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
 		enabled: false,
+		color: '#FBDB3B',
 	},
 	{
 		id: 3,
@@ -27,6 +29,7 @@ const integrations = [
 		image: '/zapier.svg',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
 		enabled: false,
+		color: '#EC541E',
 	},
 	{
 		id: 4,
@@ -34,13 +37,21 @@ const integrations = [
 		image: '/slack.svg',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
 		enabled: false,
+		color: '#50235C',
 	},
 	{
 		id: 5,
 		name: 'Github',
-		image: '/github.png',
+		image: '/github.svg',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
-		enabled: false,
+		enabled: true,
+		color: '#171717',
+		oAuthUrl: 'https://github.com/login/oauth/authorize',
+		urlParams: {
+			client_id: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID!,
+			redirect_uri: 'http://localhost:3000/api/integrate/github',
+			scope: 'repo user project',
+		},
 	},
 	{
 		id: 6,
@@ -48,6 +59,14 @@ const integrations = [
 		image: '/webflow.png',
 		description: 'Create professional, custom websites in a completely visual canvas with no code.',
 		enabled: true,
+		color: '#3951F8',
+		oAuthUrl: 'https://webflow.com/oauth/authorize',
+		urlParams: {
+			client_id: process.env.NEXT_PUBLIC_WEBFLOW_CLIENT_ID!,
+			response_type: 'code',
+			scope: 'assets:read authorized_user:read cms:read custom_code:read custom_code:write pages:read sites:read users:read ecommerce:read',
+			redirect_uri: 'https://freelance-management.vercel.app/api/integrate/webflow',
+		},
 	},
 ];
 

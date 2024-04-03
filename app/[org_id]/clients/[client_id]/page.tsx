@@ -14,9 +14,16 @@ import {
 } from '@/components/ui/dropdown-menu';
 import ClientCrudMenu from './clientCrudMenu';
 import { getClient } from '@/lib/helpers';
+import { notFound } from 'next/navigation';
+import ServicesSelector from './services-selector';
 
 const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id: string; client_id: string } }) => {
+	// const supabase = createClient();
+	// const { data, error } = await supabase.rpc('get_customer', { customer_id: client_id });
+	// const client = data[0];
 	const client = await getClient(client_id);
+
+	if (!client) return notFound();
 
 	return (
 		<div>
@@ -158,12 +165,13 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 						</Card> */}
 					</div>
 					<div className='grid gap-3 md:grid-cols-2 lg:grid-cols-4'>
-						<Card className='sm:col-span-1 md:col-span-2 lg:col-span-3'>
+						<Card className='sm:col-span-1 md:col-span-2 lg:col-span-3 lg:row-span-2'>
 							<CardHeader>
 								<CardTitle>Overview</CardTitle>
 							</CardHeader>
 							<CardContent className='pl-2'>{/* <Overview /> */}</CardContent>
 						</Card>
+
 						<Card>
 							<CardHeader>
 								<div className='flex items-center justify-between'>
@@ -171,40 +179,7 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 										<CardTitle>Services Provided</CardTitle>
 										<CardDescription>You made 265 sales this month.</CardDescription>
 									</div>
-									<Sheet>
-										<SheetTrigger asChild>
-											<Button variant='secondary'>Add Service</Button>
-										</SheetTrigger>
-										<SheetContent>
-											<SheetHeader>
-												<SheetTitle>Services</SheetTitle>
-											</SheetHeader>
-											<div className='grid gap-3'>
-												{/* {client.project_services?.map(({ service }) => (
-													<Card key={service.id}>
-														<CardHeader>
-															<div className='flex items-center justify-between'>
-																<div>
-																	<CardTitle>{service.name}</CardTitle>
-																	<CardDescription>
-																		{service.amount.toLocaleString('en-US', {
-																			style: 'currency',
-																			currency: 'USD',
-																		})}
-																	</CardDescription>
-																</div>
-																<Switch
-																	checked={client.projects.some((project) =>
-																		project.services_provided.some((service_provided) => service_provided.id === service.id)
-																	)}
-																/> 
-															</div>
-														</CardHeader>
-													</Card>
-												))} */}
-											</div>
-										</SheetContent>
-									</Sheet>
+									<ServicesSelector />
 								</div>
 							</CardHeader>
 							<CardContent>
@@ -229,6 +204,12 @@ const ClientPage = async ({ params: { org_id, client_id } }: { params: { org_id:
 									</div>
 								</div>
 							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Invoices</CardTitle>
+							</CardHeader>
 						</Card>
 					</div>
 				</TabsContent>

@@ -5,9 +5,12 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { getClients, getProjects } from '@/lib/helpers';
+import { notFound } from 'next/navigation';
 
 const ProjectsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
 	const [clients, projects] = await Promise.all([getClients(org_id), getProjects(org_id)]);
+
+	if (!clients || !projects) return notFound();
 
 	return (
 		<>
@@ -24,12 +27,12 @@ const ProjectsPage = async ({ params: { org_id } }: { params: { org_id: string }
 								This action cannot be undone. This will permanently delete your account and remove your data from our servers.
 							</SheetDescription>
 						</SheetHeader>
-						<NewProjectForm clients={clients} />
+						<NewProjectForm clients={clients ?? []} />
 					</SheetContent>
 				</Sheet>
 			</div>
 			<div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3'>
-				{projects.map((project) => (
+				{projects?.map((project) => (
 					<Link key={project.id} href={`/${org_id}/projects/${project.id}`}>
 						<Card>
 							<CardHeader>

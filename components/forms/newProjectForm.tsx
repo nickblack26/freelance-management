@@ -10,7 +10,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { CaretSortIcon, CheckIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import { createProject } from '@/app/actions';
 import { useGlobalContext } from '@/app/context/store';
 
@@ -85,7 +85,7 @@ const NewProjectForm = ({ clients }: { clients: Client[] }) => {
 										<CommandInput placeholder='Search client...' className='h-9' />
 										<CommandEmpty>No client found.</CommandEmpty>
 										<CommandGroup>
-											{clients.map((client) => (
+											{clients?.map((client) => (
 												<CommandItem
 													value={client.id}
 													key={client.id}

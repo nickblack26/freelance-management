@@ -4,8 +4,10 @@ import NewClientForm from '@/components/forms/newClientForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { getClients } from '@/lib/helpers';
+import { createClient } from '@/utils/supabase/server';
 
 const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } }) => {
+	const supabase = createClient();
 	const clients = await getClients(org_id);
 
 	return (
@@ -23,7 +25,7 @@ const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } 
 								This action cannot be undone. This will permanently delete your account and remove your data from our servers.
 							</SheetDescription>
 						</SheetHeader>
-						<NewClientForm />
+						<NewClientForm organizationId={org_id} />
 					</SheetContent>
 				</Sheet>
 			</div>
@@ -46,7 +48,7 @@ const ClientsPage = async ({ params: { org_id } }: { params: { org_id: string } 
 				</Card>
 			</div>
 			<div className='grid grid-cols-3 gap-3 pt-4'>
-				{clients.map((client) => (
+				{clients?.map((client) => (
 					<Link key={client.id.toString()} href={`/${org_id}/clients/${client.id.toString()}`}>
 						<Card>
 							<CardHeader>

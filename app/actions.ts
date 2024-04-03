@@ -5,6 +5,17 @@ import { ProjectFormValues } from '@/components/forms/newProjectForm';
 import { stripe } from '@/utils/stripe';
 import { BusinessDetailFormValues } from './business/create/business-details-form';
 import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+import { OAuthUrlParams } from '@/types/helper.types';
+
+export const handleOAuthRequest = async (oAuthUrl?: string, urlParams?: OAuthUrlParams) => {
+	console.log(oAuthUrl, urlParams);
+	if (oAuthUrl && urlParams) {
+		let fetchUrl = oAuthUrl + '?' + new URLSearchParams(urlParams);
+		console.log(fetchUrl);
+		redirect(fetchUrl);
+	}
+};
 
 export async function uploadFile(table: string, path: string, file: File) {
 	const supabase = createClient();
@@ -89,16 +100,14 @@ export const createProject = async (project: ProjectFormValues) => {
 	const supabase = createClient();
 	if (!project) return;
 
-	const { error, data } = await supabase.from('projects').insert(project).select().single();
+	const { error } = await supabase.from('projects').insert(project);
 
-	if (error || !data) {
+	if (error) {
 		console.log(error);
-		throw Error(`${error}`);
+		throw Error(`Error creating project`, { cause: error?.message });
 	}
 
 	revalidatePath('/');
-
-	return data;
 };
 
 export const deleteProject = async (projectId: string) => {
@@ -116,9 +125,10 @@ export const deleteProject = async (projectId: string) => {
 export const addClient = async (item: any) => {
 	const supabase = createClient();
 
-	const { data, error } = await supabase.from('clients').insert(item).select().single();
-	if (!data || error) {
-		throw Error(`${error}`);
+	const { error } = await supabase.from('clients').insert(item);
+
+	if (error) {
+		throw Error('Error creating client', { cause: error });
 	}
 
 	revalidatePath('/');
